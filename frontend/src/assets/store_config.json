@@ -1,0 +1,71 @@
+{
+  "store_name": "Serverless Catalog Shop",
+  "store_slug": "react-stripe-store",
+  "api_key": "{STRIPE_PUBLIC_KEY}",
+  "colors": {
+    "primary": {
+      "main": "#FF6A64",
+      "dark": "#BF4F4B",
+      "contrastText": "#FFF"
+    },
+    "secondary": {
+      "main": "#74EBD5"
+    }
+  },
+  "products": [
+    {
+      "item_id": 1000
+    },
+    {
+      "item_id": 1001
+    },
+    {
+      "item_id": 1002
+    },
+    {
+      "item_id": 1003
+    },
+    {
+      "item_id": 1004
+    },
+    {
+      "item_id": 1005
+    },
+    {
+      "item_id": 1006
+    },
+    {
+      "item_id": 1007
+    },
+    {
+      "item_id": 1008
+    },
+    {
+      "item_id": 1009
+    },
+    {
+      "item_id": 1010
+    },
+    {
+      "item_id": 1011
+    },
+    {
+      "item_id": 1012
+    },
+    {
+      "item_id": 1013
+    },
+    {
+      "item_id": 1014
+    },
+    {
+      "item_id": 1015
+    },
+    {
+      "item_id": 1016
+    },
+    {
+      "item_id": 1017
+    }
+  ]
+}

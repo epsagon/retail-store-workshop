@@ -1,0 +1,19 @@
+{
+  "name": "catalog-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-python-requirements": "^4.3.0"
+  },
+  "dependencies": {
+    "serverless-dotenv-plugin": "^2.0.1",
+    "serverless-plugin-epsagon": "^1.4.12",
+    "serverless-pseudo-parameters": "^2.4.0"
+  }
+}

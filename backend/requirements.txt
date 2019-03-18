@@ -1,0 +1,5 @@
+boto3
+simplejson
+google-api-python-client
+epsagon==1.4.0
+requests

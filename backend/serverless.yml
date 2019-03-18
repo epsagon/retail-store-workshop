@@ -1,0 +1,109 @@
+service: catalog-shop
+
+custom:
+  catalogTable: CatalogTable
+  paymentTopic: PaymentTopic
+  epsagon:
+    token: ${env:EPSAGON_TOKEN}
+    appName: catalog-shop
+
+package:
+  exclude:
+    - 'node_modules/**'
+    - 'venv/**'
+    - '__pycache__/**'
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: eu-west-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    CATALOG_TABLE: ${self:custom.catalogTable}
+    PAYMENT_TOPIC: arn:aws:sns:${self:provider.region}:#{AWS::AccountId}:${self:custom.paymentTopic}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:PutItem
+      Resource:
+        Fn::GetAtt:
+          - CatalogTable
+          - Arn
+    - Effect: "Allow"
+      Action:
+        - sns:Publish
+      Resource:
+        Fn::Join:
+        - ':'
+        - - 'arn:aws:sns'
+          - Ref: AWS::Region
+          - Ref: AWS::AccountId
+          - Fn::GetAtt:
+            - PaymentTopic
+            - TopicName
+
+functions:
+  get-items:
+    handler: handler.get_items
+    events:
+      - http:
+          path: items
+          method: get
+    environment:
+      GOOGLE_CX: ${env:GOOGLE_CX}
+      GOOGLE_KEY: ${env:GOOGLE_KEY}
+
+  payment:
+    handler: handler.payment
+    events:
+      - http:
+          path: buy_item
+          method: post
+
+  set-items:
+    handler: handler.set_items
+    events:
+      - http:
+          path: set/{count}
+          method: get
+
+  order-fullfilment:
+    handler: handler.order_fullfilment
+    events:
+      - sns: arn:aws:sns:${self:provider.region}:#{AWS::AccountId}:${self:custom.paymentTopic}
+
+resources:
+  Resources:
+    CatalogTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.catalogTable}
+        AttributeDefinitions:
+          - AttributeName: item_id
+            AttributeType: N
+        KeySchema:
+          - AttributeName: item_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    PaymentTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${self:custom.paymentTopic}
+        TopicName: ${self:custom.paymentTopic}
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
+  - serverless-pseudo-parameters
+  - serverless-plugin-epsagon
