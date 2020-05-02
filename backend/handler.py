@@ -4,11 +4,10 @@ Main handler for catalog shop
 import os
 import simplejson
 import boto3
+from urllib.parse import urlparse, parse_qs
 import requests
 import logging
-logging.getLogger('googleapicliet.discovery_cache').setLevel(logging.CRITICAL)
 from uuid import uuid4
-from googleapiclient.discovery import build
 from update_db import CATALOG_ITEMS
 
 
@@ -17,7 +16,7 @@ DYNAMODB_CLIENT = boto3.resource('dynamodb')
 CATALOG_TABLE = DYNAMODB_CLIENT.Table(os.getenv('CATALOG_TABLE'))
 SNS_CLIENT = boto3.client('sns')
 SES_CLIENT = boto3.client('ses', region_name='us-east-1')
-GCS = build('customsearch', 'v1', developerKey=os.getenv('GOOGLE_KEY'), cache_discovery=False)
+IMAGE_SEARCH_URL = 'https://api.qwant.com/api/search/images'
 
 
 def get_items(event, context):
@@ -28,8 +27,25 @@ def get_items(event, context):
 
     # Fetch image for each item.
     for item in items:
-        image_link = GCS.cse().list(q=item['name'], cx=os.getenv('GOOGLE_CX'), num=5).execute()['items'][0]['pagemap']['cse_image'][0]['src']
-        item['link'] = image_link
+        result = requests.get(
+            IMAGE_SEARCH_URL,
+            params={
+                'count': 10,
+                'q': item['name'],
+                't': 'images',
+                'safesearch': 1,
+                'locale': 'en_US',
+                'uiv': 4
+            },
+            headers={
+                'User-Agent': 'Mozilla/5.0'
+            }
+        )
+        print(result.text)
+
+        item['link'] = parse_qs(urlparse(
+            result.json()['data']['result']['items'][0]['media_fullsize']
+        ).query)['u'][0]
 
     return {
         'statusCode': 200,
@@ -42,7 +58,7 @@ def get_items(event, context):
 
 def set_items(event, context):
     """
-    Get list of items from the CatalogDB
+    set stock of items from the CatalogDB
     """
     print(event)
     results = CATALOG_TABLE.scan()

@@ -10,6 +10,7 @@ import MobileCarousel from '../ui/MobileCarousel';
 import Breadcrumb from '../ui/Breadcrumb';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { API_URL } from '../../config';
 
 const Wrapper = styled.div`
   padding: 40px;
@@ -37,7 +38,7 @@ class Product extends Component {
   }
 
   componentDidMount() {
-    fetch('https://aj6vbw5suc.execute-api.eu-west-1.amazonaws.com/dev/items')
+    fetch(`${API_URL}/items`)
       .then(res => res.json())
       .then(product => {
         console.log(this.props.product.item_id)

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { withTheme } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { API_URL } from '../../config';
 
 const Wrapper = styled.div`
   display: grid;
@@ -61,7 +62,7 @@ class ProductList extends Component {
     }
   }
   componentDidMount() {
-    fetch('https://aj6vbw5suc.execute-api.eu-west-1.amazonaws.com/dev/items')
+    fetch(`${API_URL}/items`)
       .then(res => res.json())
       .then(products => {
         this.setState({ products, isLoading: false })

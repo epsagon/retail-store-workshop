@@ -3,9 +3,6 @@ service: catalog-shop
 custom:
   catalogTable: CatalogTable
   paymentTopic: PaymentTopic
-  epsagon:
-    token: ${env:EPSAGON_TOKEN}
-    appName: catalog-shop
 
 package:
   exclude:
@@ -16,7 +13,7 @@ package:
 provider:
   name: aws
   runtime: python3.6
-  region: eu-west-1
+  region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
   environment:
     CATALOG_TABLE: ${self:custom.catalogTable}
@@ -59,9 +56,7 @@ functions:
       - http:
           path: items
           method: get
-    environment:
-      GOOGLE_CX: ${env:GOOGLE_CX}
-      GOOGLE_KEY: ${env:GOOGLE_KEY}
+          cors: true
 
   payment:
     handler: handler.payment
@@ -69,6 +64,7 @@ functions:
       - http:
           path: buy_item
           method: post
+          cors: true
 
   set-items:
     handler: handler.set_items
@@ -76,6 +72,7 @@ functions:
       - http:
           path: set/{count}
           method: get
+          cors: true
 
   order-fullfilment:
     handler: handler.order_fullfilment
@@ -106,4 +103,3 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-python-requirements
   - serverless-pseudo-parameters
-  - serverless-plugin-epsagon

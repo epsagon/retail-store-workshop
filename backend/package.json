@@ -1,12 +1,16 @@
 {
   "name": "catalog-shop",
   "version": "1.0.0",
-  "description": "",
+  "description": "Serverless catalog shop",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ran Ribenzaft",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/epsagon/serverless-catalog-shop.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "serverless-python-requirements": "^4.3.0"

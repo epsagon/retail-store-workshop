@@ -9,6 +9,7 @@ import Email from './Email';
 import Shipping from './Shipping';
 import CreditCards from './CreditCards';
 import CartSmall from '../cart/CartSmall';
+import { API_URL } from '../../config';
 
 const styles = theme => ({
   root: {
@@ -61,7 +62,7 @@ class Checkout extends Component {
       email: email
     };
 
-    fetch("https://aj6vbw5suc.execute-api.eu-west-1.amazonaws.com/dev/buy_item", {
+    fetch(`${API_URL}/buy_item`, {
       method: 'POST',
       headers: new Headers({'content-type': 'application/json'}),
       body: JSON.stringify(postBody)

@@ -36,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "nodemon server/index.js"
+    "server": "nodemon server/index.js",
+    "deploy": "npm run build && scotty --nocdn --spa --source ./build --bucket"
   },
   "proxy": "http://localhost:5000"
 }
