@@ -26,7 +26,7 @@ class Landing extends Component {
       <PageWrapper>
         <Paper style={{ padding: "40px" }}>
           <Hero style={{ backgroundImage: "url(https://images-na.ssl-images-amazon.com/images/G/01/kindle/merch/2019/VX-3273/VX-3273_SMP_FC_GW_Quote_GW-Hero-Desktop-1500x600-1X._CB454647688_.jpg)", backgroundSize: "cover" }}>
-            <a href="https://www.surveymonkey.com/r/MH5YJPV" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", marginTop: 159 }}>
+            <a href="https://epsagon.com/workshop" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", marginTop: 159 }}>
               <Button variant="raised" color="primary">Win a cool shirt!</Button>
             </a>
             <div style={{ display: "inline-block", maxWidth: "80%" }}>
