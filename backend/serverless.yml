@@ -52,6 +52,7 @@ provider:
 functions:
   get-items:
     handler: handler.get_items
+    timeout: 1
     events:
       - http:
           path: items
