@@ -25,17 +25,17 @@ provider:
         - ses:SendEmail
         - ses:SendRawEmail
       Resource: "*"
-    - Effect: "Allow"
-      Action:
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-        - dynamodb:PutItem
-      Resource:
-        Fn::GetAtt:
-          - CatalogTable
-          - Arn
+    # - Effect: "Allow"
+    #   Action:
+    #     - dynamodb:Scan
+    #     - dynamodb:GetItem
+    #     - dynamodb:UpdateItem
+    #     - dynamodb:DeleteItem
+    #     - dynamodb:PutItem
+    #   Resource:
+    #     Fn::GetAtt:
+    #       - CatalogTable
+    #       - Arn
     - Effect: "Allow"
       Action:
         - sns:Publish
