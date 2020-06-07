@@ -13,7 +13,7 @@ package:
 provider:
   name: aws
   runtime: python3.6
-  region: ${opt:region, 'us-east-1'}
+  region: ${opt:region}
   stage: ${opt:stage, 'dev'}
   environment:
     CATALOG_TABLE: ${self:custom.catalogTable}
