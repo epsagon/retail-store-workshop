@@ -5,7 +5,7 @@ Main handler for catalog shop
 import sys
 import boto3
 
-DYNAMODB_CLIENT = boto3.resource('dynamodb', region_name='eu-west-1')
+DYNAMODB_CLIENT = boto3.resource('dynamodb', region_name=sys.argv[2])
 CATALOG_TABLE = DYNAMODB_CLIENT.Table('CatalogTable')
 
 
