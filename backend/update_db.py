@@ -1,12 +1,9 @@
 """
-Main handler for catalog shop
+update stock for catalog shop
 """
 
 import sys
 import boto3
-
-DYNAMODB_CLIENT = boto3.resource('dynamodb', region_name=sys.argv[2])
-CATALOG_TABLE = DYNAMODB_CLIENT.Table('CatalogTable')
 
 
 CATALOG_ITEMS = [
@@ -149,15 +146,18 @@ CATALOG_ITEMS = [
 ]
 
 if __name__ == '__main__':
+    ddb_client = boto3.resource('dynamodb', region_name=sys.argv[2])
+    catalog_table = ddb_client.Table('CatalogTable')
+
     # Clean old
-    results = CATALOG_TABLE.scan()
+    results = catalog_table.scan()
     for item in results['Items']:
-        CATALOG_TABLE.delete_item(
+        catalog_table.delete_item(
             Key={'item_id': item['item_id']}
         )
 
     # Add new
     for i in range(int(sys.argv[1])):
-        CATALOG_TABLE.put_item(
+        catalog_table.put_item(
             Item=CATALOG_ITEMS[i]
         )
