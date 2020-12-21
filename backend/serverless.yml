@@ -3,6 +3,8 @@ service: catalog-shop
 custom:
   catalogTable: CatalogTable
   paymentTopic: PaymentTopic
+  pythonRequirements:
+    pythonBin: python3
 
 package:
   exclude:
