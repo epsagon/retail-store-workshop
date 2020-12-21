@@ -6,4 +6,3 @@
 *__pycache__*
 .DS_Store
 frontend/build
-backend/.env
