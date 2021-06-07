@@ -18,7 +18,7 @@
     "googleapis": "27",
     "handlebars": "^4.0.11",
     "helmet": "^3.12.1",
-    "nodemailer": "^4.6.7",
+    "nodemailer": "^6.4.16",
     "nodemon": "^1.17.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
